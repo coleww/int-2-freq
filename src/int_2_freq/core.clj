@@ -40,13 +40,24 @@
         wow (if up + -)
         offsets (if up
                   scale-idxs
-                  (reverse scale-idxs))]
-    (->>
-     (take (Math/abs offset) (cycle offsets))
-     (reduce +)
-     (wow index)
-     (nth notes)
-     (key2freq))
+                  (reverse scale-idxs))
+        ]
+    (if (= -1 index)
+      nil
+      (if (nil? scale-idxs)
+        nil
+        (try
 
+          (->>
+          (take (Math/abs offset) (cycle offsets))
+          (reduce +)
+          (wow index)
+          (nth notes)
+          (key2freq))
+
+          (catch IndexOutOfBoundsException e nil)
+          )
+        )
+      )
     )
  )
