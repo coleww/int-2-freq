@@ -1,6 +1,8 @@
 # int-2-freq
 
-A Clojure version of [int2freq](https://www.npmjs.com/package/int2freq) (you probably want to be using leipzig)
+Given a tonic-note, scale, and a postive-or-negative index/integer, returns the frequency for the note in that scale at that index. So for a C4 major scale, an index of 1 would be D4 and -1 would be B4. (you probably want to be using leipzig) 
+
+also available as an [npm](https://www.npmjs.com/package/int2freq) 
 
 ## Install
 
@@ -24,6 +26,6 @@ A Clojure version of [int2freq](https://www.npmjs.com/package/int2freq) (you pro
 
 index can be positive or negative
 tonic can be :A0 => :C8
-:minor :major :pent-maj :pent-min :blues
+scale can be [:minor :major :pent-maj :pent-min :blues]
 
 returns nil if it don't know what to do.
