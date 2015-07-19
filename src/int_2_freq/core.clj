@@ -1,6 +1,5 @@
 (ns int-2-freq.core)
 
-
 (def scales {:major [2 2 1 2 2 2 1]
              :minor [2 1 2 2 1 2 2]
              :pent-maj [2 2 3 2 3]
@@ -38,26 +37,14 @@
         scale-idxs (scales scale)
         up (pos? offset)
         wow (if up + -)
-        offsets (if up
-                  scale-idxs
-                  (reverse scale-idxs))
-        ]
-    (if (= -1 index)
-      nil
-      (if (nil? scale-idxs)
-        nil
+        offsets (if up scale-idxs (reverse scale-idxs))]
+    (if (= -1 index) nil
+      (if (nil? scale-idxs) nil
         (try
-
           (->>
-          (take (Math/abs offset) (cycle offsets))
-          (reduce +)
-          (wow index)
-          (nth notes)
-          (key2freq))
-
-          (catch IndexOutOfBoundsException e nil)
-          )
-        )
-      )
-    )
- )
+            (take (Math/abs offset) (cycle offsets))
+            (reduce +)
+            (wow index)
+            (nth notes)
+            (key2freq))
+          (catch IndexOutOfBoundsException e nil))))))
