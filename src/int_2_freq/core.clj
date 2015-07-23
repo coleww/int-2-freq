@@ -36,15 +36,27 @@
   (let [index (.indexOf notes tonic)
         scale-idxs (scales scale)
         up (pos? offset)
-        direction (if up + -)
-        offsets (if up scale-idxs (reverse scale-idxs))]
-    (if (= -1 index) nil
-      (if (nil? scale-idxs) nil
-        (try
-          (->>
-            (take (Math/abs offset) (cycle offsets))
-            (reduce +)
-            (direction index)
-            (nth notes)
-            (key2freq))
-          (catch IndexOutOfBoundsException e nil))))))
+        offsets (if up scale-idxs (reverse scale-idxs))
+        new-idx (get-idx offset index offsets)]
+    (idx-2-freq new-idx)
+    ))
+
+(defn get-idx
+  "computes idx of new note"
+  [offset index offsets]
+  {:pre [(not-empty offsets) (not= -1 index)]}
+  (->>
+   (take (Math/abs offset) (cycle offsets))
+   (reduce +)
+   ((if (pos? offset) + -) index))
+  )
+
+(defn idx-2-freq
+  "checks that idx is in bounds, then converts to freq"
+  [idx]
+  {:pre [(>= idx 0) (< idx (count notes))]}
+  (->>
+   idx
+   (nth notes)
+   (key2freq))
+  )

@@ -28,8 +28,8 @@
 
 
 (deftest failure-test
-  (testing "returns nil for bad input"
-    (is (nil? (int-2-freq -2 :B0 :minor)))
-    (is (nil? (int-2-freq 0 :B0 :pasta-sauce)))
-    (is (nil? (int-2-freq 0 :bob-dole :minor)))
-    (is (nil? (int-2-freq 3 :A7 :minor)))))
+  (testing "throws error on bad input/out of bounds index"
+    (is (thrown? java.lang.AssertionError (int-2-freq -2 :B0 :minor)))
+    (is (thrown? java.lang.AssertionError (int-2-freq 0 :B0 :pasta-sauce)))
+    (is (thrown? java.lang.AssertionError (int-2-freq 0 :bob-dole :minor)))
+    (is (thrown? java.lang.AssertionError (int-2-freq 3 :A7 :minor)))))
